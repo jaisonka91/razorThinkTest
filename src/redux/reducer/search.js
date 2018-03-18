@@ -28,6 +28,7 @@ export const search = (state = initialState, action) => {
           [action.payload.fullName]: action.payload.repos,
         },
         loading: {
+          ...state.loading,
           [action.payload.fullName]: true
         }
       }
@@ -39,6 +40,7 @@ export const search = (state = initialState, action) => {
           [action.payload.fullName]: action.payload.repos,
         },
         loading: {
+          ...state.loading,
           [action.payload.fullName]: false
         },
       }

@@ -30,6 +30,7 @@ export default class Search extends Component {
   render() {
     const { gitData } = this.state;
     const { loading } = this.props;
+    console.log(loading,'>')
     return (
       <div className="container">
         <div style={{width: '50%', margin: '20px auto'}}>
@@ -41,7 +42,7 @@ export default class Search extends Component {
           />
         </div>
         <WrapGitUsers gitUsers={gitData} />
-        {loading && <div style={{textAlign: 'center'}}><span>loading please wait...</span></div>}
+        {loading && !gitData.length &&<div style={{textAlign: 'center'}}><span>loading please wait...</span></div>}
         {this.state.noData && !loading && <div style={{textAlign: 'center'}}><span>No users available!!!</span></div>}
       </div>
     );
