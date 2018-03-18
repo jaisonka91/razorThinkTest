@@ -1,7 +1,8 @@
-import { SEARCH_DATA } from '../actions';
+import { SEARCH_DATA, SEARCH_REPO } from '../actions';
 
 const initialState = {
   gitData: [],
+  repoData: {}
 }
 
 export const search = (state = initialState, action) => {
@@ -9,7 +10,16 @@ export const search = (state = initialState, action) => {
     case SEARCH_DATA:
       return {
         ...state,
-        gitData: action.result
+        gitData: action.result,
+        repoData: {}
+      }
+    case SEARCH_REPO:
+      return {
+        ...state,
+        repoData: {
+          ...state.repoData,
+          [action.payload.fullName]: action.payload.repos
+        }
       }
   }
   return state;

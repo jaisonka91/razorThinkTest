@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { searchData } from '../redux/actions.js';
-import { bindActionCreators } from 'redux';
 import WrapGitUsers from './wrapGitUsers';
 
-class Search extends Component {
+export default class Search extends Component {
   constructor() {
     super();
     this.state = {
@@ -36,27 +33,15 @@ class Search extends Component {
       <div className="container">
         <div style={{width: '50%', margin: '20px auto'}}>
           <input
-            placeholder="Search Git"
+            placeholder="Search Git Users"
             className="form-control"
             value={this.state.search}
             onChange={this.handlePlanet}
           />
         </div>
         <WrapGitUsers gitUsers={gitData} />
-        {this.state.noData && <div style={{textAlign: 'center'}}><span>No data available!!!</span></div>}
+        {this.state.noData && <div style={{textAlign: 'center'}}><span>No users available!!!</span></div>}
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) =>{
-  return {
-    gitData: state.search.gitData,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ searchData }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -1,29 +1,12 @@
 import React, { Component } from 'react';
+import WrapRepos from './wrapRepos';
 
 export default class Users extends Component {
 
-  constructor(){
-    super();
-    this.state = {
-      showInfo: false
-    }
-  }
-
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps,'>>nextProps')
-  }
-
-  handleClick = (status) =>{
-    return()=>{
-      this.setState({showInfo: status})
-    }
-  }
-
   render(){
     const { user } = this.props;
-    console.log(user, Object.keys(user),'>>>')
     return(
-      <div className="alert alert-primary" onClick={this.handleClick(!this.state.showInfo)}>
+      <div className="alert alert-primary">
         <div>
           <div style={{float: 'left', height: 50, width: 50, borderRadius: '50%', backgroundImage: `url(${user.avatar_url})`, backgroundSize: 'contain'}} />
           <div style={{float: 'left', margin: '2px 0 0 15px', textTransform: 'capitalize'}}>
@@ -37,13 +20,10 @@ export default class Users extends Component {
           <div style={{clear: 'both'}}/>
         </div>
         <div className="alert alert-light" style={{marginTop: '1.5em'}}>
-          <h4 style={{textAlign: 'center'}}> Repositories </h4>
+          <h5 style={{textAlign: 'center'}}> Repositories </h5>
           <div style={{margin: '10px 0'}}>
-            <ul>
-                {user.repositories && user.repositories.map((item, index)=>{
-                  return <li key={index} style={{textTransform: 'capitalize', fontSize: 15}}>{item.name}</li>
-                })}
-            </ul>
+            <WrapRepos repos={user.repositories}/>
+            {!user.repositories.length && <span>No repository available !!!</span>}
           </div>
         </div>
       </div>

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import Users from './users';
+import Repos from './containers/repos.container';
 
 export default class WrapGitUsers extends Component {
   render(){
-    const { gitUsers } = this.props;
+    const { repos } = this.props;
     return(
       <div>
         {
-          gitUsers.map((item, index)=>{
-            return <Users user={item} key={item.id}/>
+          repos.map((item, index)=>{
+            return <Repos details={item} key={index}/>
           })
         }
       </div>
