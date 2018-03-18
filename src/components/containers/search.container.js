@@ -7,6 +7,7 @@ import Search from '../search';
 const mapStateToProps = (state) =>{
   return {
     gitData: state.search.gitData,
+    loading: state.search.loading
   }
 }
 

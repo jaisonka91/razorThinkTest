@@ -22,13 +22,14 @@ export default class Search extends Component {
   }
 
   handlePlanet = e => {
-    this.setState({ search: e.target.value }, () => {
+    this.setState({ search: e.target.value, noData: true }, () => {
       this.props.searchData(this.state.search);
     });
   };
 
   render() {
     const { gitData } = this.state;
+    const { loading } = this.props;
     return (
       <div className="container">
         <div style={{width: '50%', margin: '20px auto'}}>
@@ -40,7 +41,8 @@ export default class Search extends Component {
           />
         </div>
         <WrapGitUsers gitUsers={gitData} />
-        {this.state.noData && <div style={{textAlign: 'center'}}><span>No users available!!!</span></div>}
+        {loading && <div style={{textAlign: 'center'}}><span>loading please wait...</span></div>}
+        {this.state.noData && !loading && <div style={{textAlign: 'center'}}><span>No users available!!!</span></div>}
       </div>
     );
   }

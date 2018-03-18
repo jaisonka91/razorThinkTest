@@ -1,11 +1,14 @@
 import axios from 'axios';
 let axiosToken;
 
-export const SEARCH_DATA = 'SEARCH_DATA';
-export const SEARCH_REPO = 'SEARCH_REPO';
+export const SEARCH_DATA_DONE = 'SEARCH_DATA_DONE';
+export const SEARCH_DATA_LOADING = 'SEARCH_DATA_LOADING';
+export const SEARCH_REPO_DONE = 'SEARCH_REPO_DONE';
+export const SEARCH_REPO_LOADING = 'SEARCH_REPO_LOADING';
 
 export function searchData(data) {
   return dispatch =>{
+    dispatch({ type: SEARCH_DATA_LOADING, result: []});
     var CancelToken = axios.CancelToken;
     if(axiosToken){
       axiosToken.cancel();
@@ -32,38 +35,42 @@ export function searchData(data) {
             pro.push(kk);
           }
           Promise.all(pro).then((data)=>{
-            dispatch({ type: SEARCH_DATA, result: data});
+            dispatch({ type: SEARCH_DATA_DONE, result: data});
           })
         }else{
-          dispatch({ type: SEARCH_DATA, result});
+          dispatch({ type: SEARCH_DATA_DONE, result});
         }
       }).catch((err)=>{
       });
     }else{
-      dispatch({ type: SEARCH_DATA, result});
+      dispatch({ type: SEARCH_DATA_DONE, result});
     }
   }
 }
 
 export function searchReposLang(fullName) {
   return dispatch =>{
+    dispatch({ type: SEARCH_REPO_LOADING, payload: {
+      repos: [],
+      fullName
+    }});
     let result = {};
     if(fullName != ''){
       axios.get('https://api.github.com/repos/'+fullName+'/languages?client_id=e89bb43ba3e8d1dc2055&client_secret=a370f390d0278301e69c19bfb65b0f3b57203293')
       .then((res) =>{
         if(res && res.data){
           result = res.data;
-          dispatch({ type: SEARCH_REPO, payload: {
+          dispatch({ type: SEARCH_REPO_DONE, payload: {
             repos: result,
             fullName
           }});
         }else{
-          dispatch({ type: SEARCH_REPO, result});
+          dispatch({ type: SEARCH_REPO_DONE, result});
         }
       }).catch((err)=>{
       });
     }else{
-      dispatch({ type: SEARCH_REPO, result});
+      dispatch({ type: SEARCH_REPO_DONE, result});
     }
   }
 }

@@ -8,6 +8,7 @@ import Repos from '../repos';
 const mapStateToProps = (state, ownProps) =>{
   return {
     languageData: state.search.repoData[ownProps.details.full_name] || {},
+    loading: state.search.loading[ownProps.details.full_name]
   }
 };
 
