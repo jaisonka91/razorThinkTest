@@ -21,7 +21,6 @@ describe('Repos', () => {
     };
     const searchReposLang = sinon.spy();
     const wrapper = shallow(<Repos details={details} languageData={languageData} searchReposLang={searchReposLang}/>);
-    console.log(wrapper,'.>>>>>>.')
     wrapper.find('.nameClick').simulate('click');
     expect(searchReposLang).to.have.property('languageData', 1);
     // expect(wrapper.find('Ul')).to.have.length(1);
