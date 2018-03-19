@@ -5,6 +5,7 @@ export const SEARCH_DATA_DONE = 'SEARCH_DATA_DONE';
 export const SEARCH_DATA_LOADING = 'SEARCH_DATA_LOADING';
 export const SEARCH_REPO_DONE = 'SEARCH_REPO_DONE';
 export const SEARCH_REPO_LOADING = 'SEARCH_REPO_LOADING';
+export const NETWORK_ERROR = 'NETWORK_ERROR';
 
 export function searchData(data) {
   return dispatch =>{
@@ -41,6 +42,10 @@ export function searchData(data) {
           dispatch({ type: SEARCH_DATA_DONE, result});
         }
       }).catch((err)=>{
+        if(axios.isCancel(err)) {
+        }else{
+          dispatch({ type: NETWORK_ERROR});
+        }
       });
     }else{
       dispatch({ type: SEARCH_DATA_DONE, result});

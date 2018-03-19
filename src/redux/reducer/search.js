@@ -1,8 +1,9 @@
-import { SEARCH_DATA_LOADING, SEARCH_DATA_DONE, SEARCH_REPO_DONE, SEARCH_REPO_LOADING } from '../actions';
+import { SEARCH_DATA_LOADING, SEARCH_DATA_DONE, SEARCH_REPO_DONE, SEARCH_REPO_LOADING, NETWORK_ERROR } from '../actions';
 
 const initialState = {
   gitData: [],
-  repoData: {}
+  repoData: {},
+  networkStatus: true
 }
 
 export const search = (state = initialState, action) => {
@@ -12,13 +13,15 @@ export const search = (state = initialState, action) => {
         ...state,
         gitData: action.result,
         loading: true,
+        networkStatus: true
       }
     case SEARCH_DATA_DONE:
       return {
         ...state,
         gitData: action.result,
         loading: false,
-        repoData: {}
+        repoData: {},
+        networkStatus: true
       }
     case SEARCH_REPO_LOADING:
       return {
@@ -30,7 +33,8 @@ export const search = (state = initialState, action) => {
         loading: {
           ...state.loading,
           [action.payload.fullName]: true
-        }
+        },
+        networkStatus: true
       }
     case SEARCH_REPO_DONE:
       return {
@@ -43,6 +47,13 @@ export const search = (state = initialState, action) => {
           ...state.loading,
           [action.payload.fullName]: false
         },
+        networkStatus: true
+      }
+    case NETWORK_ERROR:
+      return {
+        ...state,
+        loading: false,
+        networkStatus: false
       }
   }
   return state;
